@@ -18,12 +18,12 @@
 	
 <bean id="saxophone" class="com.springinactions.springidol.Saxophone" />
 
-<bean id="kenny2" class="com.springinactions.springidol.Instrumentalist">
+<bean id="kenny2" class="com.springinactions.springidol.Instrumentalist" autowire="byType">
 	<property name="song" value="Jingle Bells" />
-	<property name="instrument" ref="saxophone" />
+	
 </bean>
 
-<bean id="piano" class="com.springinactions.springidol.Piano"></bean>
+<bean id="piano" class="com.springinactions.springidol.Piano" primary="true"></bean>
 
 <bean id="hank" class="com.springinactions.springidol.OneManBand">
 	<property name="instruments">
