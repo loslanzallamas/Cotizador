@@ -160,6 +160,7 @@
                                     <f:convertDateTime dateStyle="short"/>
                                 </h:outputText>
                             </p:column>
+                            <!--
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold; font-size: smaller" value="% Margen"/>
@@ -168,6 +169,7 @@
                                     <f:convertNumber type="number" pattern="###0.00"/>
                                 </h:outputText>
                             </p:column>
+                            !-->
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold; font-size: smaller" value="Coef."/>
@@ -204,7 +206,7 @@
                         </p:dataTable>
                     </p:panel>
 
-                    <p:panel id="vtasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                    <p:panel id="vtasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller" >
                         <f:facet name="header">
                             <p:commandLink value="Ventas" actionListener="#{articulo.buscarVtasCompDet}" update="vtasPanel" title="Click para consultar ventas"/>
                         </f:facet>
