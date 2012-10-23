@@ -4,9 +4,9 @@
                 template="./../resources/plantilla.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.prime.com.tr/ui">
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h:form id="formAriculo" prependId="false">
+        <h:form id="formArticulo" prependId="false">
             <p:ajaxStatus>
                 <f:facet name="start">
                     <h:outputText value="Consultando al servidor "/>
@@ -23,7 +23,7 @@
                             <h:panelGrid columns="2">
                                 <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: smaller">
                                 </h:inputText>
-                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos}" style="font-size: smaller" update="ArticulosPanel">
+                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: smaller" update="ArticulosPanel">
                                 </p:commandButton>
                             </h:panelGrid>
                             <p:outputPanel id="ArticulosPanel">
@@ -32,7 +32,7 @@
                                         <f:facet name="header">
                                             <h:outputText style="font-weight: bold;font-size: smaller" value="Cód."/>
                                         </f:facet>
-                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic}" global="false" update="formAriculo">
+                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic}" global="false" update="formArticulo">
                                             <f:param name="codigoArtParam" value="#{articulos.artCod}"/>
                                         </p:commandLink>
                                     </p:column>
@@ -208,7 +208,7 @@
 
                     <p:panel id="vtasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller" >
                         <f:facet name="header">
-                            <p:commandLink value="Ventas" actionListener="#{articulo.buscarVtasCompDet}" update="vtasPanel" title="Click para consultar ventas"/>
+                            <p:commandLink value="Ventas" actionListener="#{articulo.buscarVtasCompDet(event)}" update="vtasPanel" title="Click para consultar ventas"/>
                         </f:facet>
                         <p:dataTable id="histVtas" value="#{articulo.vtaFacturas}" dynamic="true" var="historico" rendered="#{!empty articulo.vtaFacturas}">
                             <p:column filterBy="#{historico.comp_Tipo}" filterStyle="width: 32px; font-size: smaller" sortBy="#{historico.comp_Tipo}" parser="text">
@@ -263,7 +263,7 @@
                     </p:panel>
                     <p:panel id="cprasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <f:facet name="header">
-                            <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact}" update="cprasPanel"  title="Click para consultar compras"/>
+                            <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact(event)}" update="cprasPanel"  title="Click para consultar compras"/>
                         </f:facet>
                         <p:dataTable id="histCompras" value="#{articulo.cprasArtic}" dynamic="true" var="compras" rendered="#{!empty articulo.cprasArtic}">
                             <p:column sortBy="#{compras.comp_Tipo}" filterBy="#{compras.comp_Tipo}" filterStyle="width: 32px; font-size: smaller">
@@ -314,7 +314,7 @@
                     </p:panel>
                     <p:panel id="vtalisPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <f:facet name="header">
-                            <p:commandLink value="Listas de precios" actionListener="#{articulo.buscarListaPrecios}" update="vtalisPanel"  title="Click para consultar listas de precios"/>
+                            <p:commandLink value="Listas de precios" actionListener="#{articulo.buscarListaPrecios(event)}" update="vtalisPanel"  title="Click para consultar listas de precios"/>
                         </f:facet>
                         <p:dataTable value="#{articulo.vlistasdets}" var="listasPrecios" rendered="#{!empty articulo.vlistasdets}">
                             <p:column>
