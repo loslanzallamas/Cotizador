@@ -25,6 +25,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
 import Holistart.VtaFacturas;
 import Soporte.precioVta;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -132,14 +134,14 @@ public class articulo implements Serializable, ActionListener {
     public void setArtArticulos(Artic[] artArticulos) {
         this.artArticulos = artArticulos;
     }
-    protected VtaFacturas[] vtaFacturas;
+    protected List<VtaFacturas> vtaFacturas;
 
     /**
      * Get the value of vtaFacturas
      *
      * @return the value of vtaFacturas
      */
-    public VtaFacturas[] getVtaFacturas() {
+    public List<VtaFacturas> getVtaFacturas() {
         return vtaFacturas;
     }
 
@@ -148,7 +150,7 @@ public class articulo implements Serializable, ActionListener {
      *
      * @param vtaFacturas new value of vtaFacturas
      */
-    public void setVtaFacturas(VtaFacturas[] vtaFacturas) {
+    public void setVtaFacturas(List<VtaFacturas> vtaFacturas) {
         this.vtaFacturas = vtaFacturas;
     }
     protected CpraFacturas[] cprasArtic;
@@ -325,10 +327,11 @@ public class articulo implements Serializable, ActionListener {
     public void buscarVtasCompDet(ActionEvent event) {
         try {
             String artiCod = getArtArt().getArtCod();
-            VtaFacturas[] vtaFacturases = holistartBean.articuloVentas(artiCod);
+            List<VtaFacturas> vtaFacturases = Arrays.asList(holistartBean.articuloVentas(artiCod));
             setVtaFacturas(vtaFacturases);
         } catch (Exception e) {
             e.getMessage();
+            System.out.println("Error al cargar las ventas");
         }
     }
 

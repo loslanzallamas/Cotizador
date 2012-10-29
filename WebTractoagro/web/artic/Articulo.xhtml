@@ -32,7 +32,7 @@
                                         <f:facet name="header">
                                             <h:outputText style="font-weight: bold;font-size: smaller" value="Cód."/>
                                         </f:facet>
-                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic}" global="false" update="formArticulo">
+                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic}" global="false"  update=":formArticulo,:formArticulo:detallesProv">
                                             <f:param name="codigoArtParam" value="#{articulos.artCod}"/>
                                         </p:commandLink>
                                     </p:column>
@@ -114,9 +114,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:panel> !-->
-                    <p:panel header="Proveedores" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                    <p:panel id="detallesProv" header="Proveedores" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <h:outputText value="No se encontraron proveedores" rendered="#{empty articulo.provCostos}"/>
-                        <p:dataTable id="provCostos" value="#{articulo.provCostos}" var="provCosto" rendered="#{!empty articulo.artArt}">
+                        <p:dataTable id="provCostos" value="#{articulo.provCostos}" var="provCosto" >
                             <p:column width="16">
                                 <p:rowToggler/>
                             </p:column>
@@ -124,7 +124,7 @@
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold;; font-size: smaller" value="Proveedor"/>
                                 </f:facet>
-                                <p:commandLink value="#{provCosto.proveeid.provNom}" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()" update="poutProvDet">
+                                <p:commandLink value="#{provCosto.proveeid.provNom}" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()">
                                     <f:param name="parProvCod" value="#{provCosto.proveeid.provCod}"/>
                                 </p:commandLink>
                             </p:column>
@@ -185,7 +185,7 @@
                                     <f:convertNumber type="currency"/>
                                 </h:outputText>
                             </p:column>
-                            <f:facet name="expansion">
+                            <p:rowExpansion>
                                 <h:panelGrid title="Detalles precios de lista" columns="1">
                                     <h:panelGrid columns="2" style="border-style: solid">
                                         <h:outputText value="Competencia: "/>
@@ -202,7 +202,7 @@
                                         <h:outputText value="#{provCosto.arProvObs}"/>
                                     </h:panelGrid>
                                 </h:panelGrid>
-                            </f:facet>
+                            </p:rowExpansion>
                         </p:dataTable>
                     </p:panel>
 
@@ -255,7 +255,7 @@
                                     <f:convertNumber type="currency"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column filterBy="#{historico.comp_Operador}" filterStyle="width: 32px; font-size: smaller">
+                            <p:column sortBy="#{historico.comp_Operador}" filterBy="#{historico.comp_Operador}" filterStyle="width: 32px; font-size: smaller">
                                 <f:facet name="header"><h:outputText value="Oper." style="font-weight: bold; font-size: smaller"/></f:facet>
                                 <h:outputText value="#{historico.comp_Operador}" style="float: right"/>
                             </p:column>
@@ -358,6 +358,7 @@
             </p:dialog>
             <p:dialog id="provDatos" header="Proveedor" widgetVar="dlgProv" closeOnEscape="true">
                 <p:outputPanel id="poutProvDet">
+                    <h:outputText value="Provedor"/>
                     <h:panelGrid id="display" columns="2">
                         <h:outputText value="Código: " style="font-size: smaller"/>
                         <h:outputText value="#{proveedores.provProveedor.provCod}" style="font-size: smaller"/>
