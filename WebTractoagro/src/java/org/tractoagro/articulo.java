@@ -9,13 +9,17 @@ import DBSistema.ProveeLis;
 import DBSistema.VlistasDet;
 import Holistart.CpraFacturas;
 import Holistart.HolistartLocal;
+import Holistart.VtaFacturas;
 import Sistema.ArticuloLocal;
 import Sistema.CarteraCliLocal;
 import Sistema.CompetenciaLocal;
 import Sistema.MaestroBeanLocal;
 import Sistema.ProveedorLocal;
 import Sistema.VlistasLocal;
+import Soporte.precioVta;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -23,10 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
-import Holistart.VtaFacturas;
-import Soporte.precioVta;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -344,7 +344,7 @@ public class articulo implements Serializable, ActionListener {
             CpraFacturas[] cpraFacturas = (CpraFacturas[]) holistartBean.listarCompCpraporArticulo(artiCod).toArray(new CpraFacturas[0]);
             setCprasArtic(cpraFacturas);
         } catch (Exception e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
     }
 
