@@ -62,58 +62,6 @@
                     </h:panelGrid>
                 </h:panelGrid>
                 <p:outputPanel id="articDetalles" rendered="#{!empty articulo.artArt}">
-                    <!--<p:panel header="Stock" style="font-size: smaller">
-                        <h:outputText value="No se encontraron existencias" rendered="#{empty articulo.provCostos}"/>
-                        <p:dataTable id="artStock" value="#{stock.almacenes}" var="almacenes">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold;; font-size: smaller" value="Dep."/>
-                                </f:facet>
-                                <p:commandLink value="#{almacenes.depCod}" global="false" oncomplete="dlgDeposito.show()" update="poutDepDatos">
-                                    <f:param name="parDepCod" value="#{almacenes.depCod}"/>
-                                </p:commandLink>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold;; font-size: smaller" value="Ubic."/>
-                                </f:facet>
-                                <p:commandLink value="" global="false" oncomplete="dlgUbicacion.show()" update="poutUbDatos">
-                                    <f:param name="parUbCod" value="#{articulo.artArt.artCod}"/>
-                                </p:commandLink>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Cant."/>
-                                </f:facet>
-                                <h:outputText value="" style="float: right">
-                                    <f:convertNumber type="number" pattern="###0.00"/>
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Costo"/>
-                                </f:facet>
-                                <h:outputText value="" style="float: right">
-                                    <f:convertNumber type="currency" pattern="###0.00"/>
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Proveedor"/>
-                                </f:facet>
-                                <h:outputText value="" style="float: right">
-                                </h:outputText>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Fecha Ult. Ingreso"/>
-                                </f:facet>
-                                <h:outputText value="">
-                                    <f:convertDateTime dateStyle="short"/>
-                                </h:outputText>
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel> !-->
                     <p:panel id="detallesProv" header="Proveedores" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <p:growl showDetail="true"/>
                         <h:outputText value="No se encontraron proveedores" rendered="#{empty articulo.provCostos}"/>
@@ -161,16 +109,6 @@
                                     <f:convertDateTime dateStyle="short"/>
                                 </h:outputText>
                             </p:column>
-                            <!--
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText style="font-weight: bold; font-size: smaller" value="% Margen"/>
-                                </f:facet>
-                                <h:outputText value="#{provCosto.preVta.porcUtilidad}" style="float: right">
-                                    <f:convertNumber type="number" pattern="###0.00"/>
-                                </h:outputText>
-                            </p:column>
-                            !-->
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold; font-size: smaller" value="Coef."/>
@@ -305,12 +243,6 @@
                                     <f:convertNumber type="currency"/>
                                 </h:outputText>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header"><h:outputText value="Bonif." style="font-weight: bold; font-size: smaller"/></f:facet>
-                                <h:outputText value="#{compras.cpraFacturasDet.ifps_bonif}" style="float: left">
-                                    <f:convertNumber pattern="###0,00"/>
-                                </h:outputText>
-                            </p:column>
                         </p:dataTable>
                     </p:panel>
                     <p:panel id="vtalisPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
@@ -337,26 +269,6 @@
                     </p:panel>
                 </p:outputPanel>
             </h:panelGrid>
-            <p:dialog id="depDatos" header="Proveedor" widgetVar="dlgDeposito" >
-                <p:outputPanel id="poutDepDatos">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Código: " style="font-size: smaller"/>
-                        <h:outputText value="" style="font-size: smaller"/>
-                        <h:outputText value="Descripción: " style="font-size: smaller"/>
-                        <h:outputText value="" style="font-size: smaller"/>
-                    </h:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
-            <p:dialog id="ubDatos" header="Proveedor" widgetVar="dlgUbicacion" closeOnEscape="true">
-                <p:outputPanel id="poutUbDatos">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Código: " style="font-size: smaller"/>
-                        <h:outputText value="" style="font-size: smaller"/>
-                        <h:outputText value="Descripción: " style="font-size: smaller"/>
-                        <h:outputText value="" style="font-size: smaller"/>
-                    </h:panelGrid>
-                </p:outputPanel>
-            </p:dialog>
             <p:dialog id="provDatos" header="Proveedor" widgetVar="dlgProv">
                 <p:outputPanel id="poutProvDet">
                     <h:outputText value="Proveedor"/>
@@ -370,15 +282,11 @@
                     </h:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:dialog id="precioVta" header="Precio de venta" widgetVar="dlgpreVta">
-                <p:outputPanel id="poutPreVta">
-                </p:outputPanel>
-            </p:dialog>
         </h:form>
     </ui:define>
 
     <ui:define name="bottom">
-        <h:outputText value="2010" style="float: right;font-size: smaller"/>
+        <h:outputText value="2012" style="float: right;font-size: smaller"/>
     </ui:define>
 
 </ui:composition>
