@@ -286,6 +286,7 @@ public class articulo implements Serializable, ActionListener {
         try {
             ProveeLis[] proveelises = competenciaBean.buscarCompetencia(articCod);
             setProvCostos(proveelises);
+            limpiarVtasCprasCompDet();
         } catch (Exception e) {
             e.getMessage();
         }
@@ -324,6 +325,8 @@ public class articulo implements Serializable, ActionListener {
         setVlistasdets(null);
     }
 
+    
+    
     public void buscarVtasCompDet(ActionEvent event) {
         try {
             String artiCod = getArtArt().getArtCod();
@@ -368,5 +371,10 @@ public class articulo implements Serializable, ActionListener {
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void limpiarVtasCprasCompDet() {
+        setVtaFacturas(null);
+        setCprasArtic(null);
     }
 }

@@ -54,14 +54,18 @@ public class proveedores implements Serializable, ActionListener{
 
     public void consultarProveedor(ActionEvent event) {
         try {
+            setProvProveedor(null);
             FacesContext facesContext = FacesContext.getCurrentInstance();
             Map requestMap = facesContext.getExternalContext().getRequestParameterMap();
             String strprovCodigo = (String)requestMap.get("parProvCod");
             Integer provCodigo = Integer.parseInt(strprovCodigo);
             setProvProveedor(holistartBean.consultaProveedor(provCodigo));
+            System.out.println("Error al buscar datos del proveedor en la base " + provProveedor.getProvNombre());
         } catch (Exception e) {
-            e.getMessage();
+            System.out.println("Error al buscar datos del proveedor");
+            System.out.println("Error encontrado" + e.getMessage());
         }
+        
     }
 
 

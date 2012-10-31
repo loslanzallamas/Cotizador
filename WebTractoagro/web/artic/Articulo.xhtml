@@ -115,6 +115,7 @@
                         </p:dataTable>
                     </p:panel> !-->
                     <p:panel id="detallesProv" header="Proveedores" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                        <p:growl showDetail="true"/>
                         <h:outputText value="No se encontraron proveedores" rendered="#{empty articulo.provCostos}"/>
                         <p:dataTable id="provCostos" value="#{articulo.provCostos}" var="provCosto" >
                             <p:column width="16">
@@ -124,7 +125,7 @@
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold;; font-size: smaller" value="Proveedor"/>
                                 </f:facet>
-                                <p:commandLink value="#{provCosto.proveeid.provNom}" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()">
+                                <p:commandLink value="#{provCosto.proveeid.provNom}" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()" update=":formArticulo:provDatos">
                                     <f:param name="parProvCod" value="#{provCosto.proveeid.provCod}"/>
                                 </p:commandLink>
                             </p:column>
@@ -336,7 +337,7 @@
                     </p:panel>
                 </p:outputPanel>
             </h:panelGrid>
-            <p:dialog id="depDatos" header="Proveedor" widgetVar="dlgDeposito" closeOnEscape="true">
+            <p:dialog id="depDatos" header="Proveedor" widgetVar="dlgDeposito" >
                 <p:outputPanel id="poutDepDatos">
                     <h:panelGrid columns="2">
                         <h:outputText value="Código: " style="font-size: smaller"/>
@@ -356,9 +357,9 @@
                     </h:panelGrid>
                 </p:outputPanel>
             </p:dialog>
-            <p:dialog id="provDatos" header="Proveedor" widgetVar="dlgProv" closeOnEscape="true">
+            <p:dialog id="provDatos" header="Proveedor" widgetVar="dlgProv">
                 <p:outputPanel id="poutProvDet">
-                    <h:outputText value="Provedor"/>
+                    <h:outputText value="Proveedor"/>
                     <h:panelGrid id="display" columns="2">
                         <h:outputText value="Código: " style="font-size: smaller"/>
                         <h:outputText value="#{proveedores.provProveedor.provCod}" style="font-size: smaller"/>
