@@ -21,18 +21,18 @@
                     <h:panelGrid>
                         <h:panelGrid style="border-style: solid" >
                             <h:panelGrid columns="2">
-                                <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: small">
+                                <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: smaller">
                                 </h:inputText>
-                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: small" update="ArticulosPanel">
+                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: smaller" update="ArticulosPanel">
                                 </p:commandButton>
                             </h:panelGrid>
                             <p:outputPanel id="ArticulosPanel">
-                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: small" rendered="#{! empty articulo.artArticulos}">
+                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: smaller" rendered="#{! empty articulo.artArticulos}">
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText style="font-weight: bold;font-size: small" value="Cód."/>
+                                            <h:outputText style="font-weight: bold;font-size: smaller" value="Cód."/>
                                         </f:facet>
-                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic(event)}" ajax="true" global="false"  update=":formArticulo,:formArticulo:detallesProv">
+                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic(event)}" ajax="false" global="false"  update=":formArticulo,:formArticulo:detallesProv">
                                             <f:param name="codigoArtParam" value="#{articulos.artCod}"/>
                                         </p:commandLink>
                                     </p:column>
@@ -52,11 +52,11 @@
                             </p:outputPanel>
                         </h:panelGrid>
                         <h:panelGrid id="ArticuloPanel" columns="2">
-                            <h:outputText value="Código: " rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
+                            <h:outputText value="Código: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
                             <h:outputText id="detCodigoArt" value="#{articulo.artArt.artCod}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
-                            <h:outputText value="Descripción: " rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
+                            <h:outputText value="Descripción: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
                             <h:outputText id="detDescArt" value="#{articulo.artArt.artDesc}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
-                            <h:outputText value="Rubro: " rendered="#{!empty articulo.artArt}" style="font-size: 12"/>
+                            <h:outputText value="Rubro: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
                             <h:outputText id="detRubArt" value="#{articulo.artArt.artRub.marCod}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
                         </h:panelGrid>
                     </h:panelGrid>
@@ -73,7 +73,7 @@
                                 <f:facet name="header">
                                     <h:outputText style="font-weight: bold;; font-size: smaller" value="Proveedor"/>
                                 </f:facet>
-                                <p:commandLink value="#{provCosto.proveeid.provNom}" ajax="true" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()" update=":formArticulo:provDatos">
+                                <p:commandLink value="#{provCosto.proveeid.provNom}" ajax="false" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()" update=":formArticulo:provDatos">
                                     <f:param name="parProvCod" value="#{provCosto.proveeid.provCod}"/>
                                 </p:commandLink>
                             </p:column>
@@ -202,7 +202,7 @@
                     </p:panel>
                     <p:panel id="cprasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <f:facet name="header">
-                            <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact(event)}" ajax="true" update="cprasPanel"  title="Click para consultar compras"/>
+                            <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact(event)}" ajax="false" update="cprasPanel"  title="Click para consultar compras"/>
                         </f:facet>
                         <p:dataTable id="histCompras" value="#{articulo.cprasArtic}" dynamic="true" var="compras" rendered="#{!empty articulo.cprasArtic}">
                             <p:column sortBy="#{compras.comp_Tipo}" filterBy="#{compras.comp_Tipo}" filterStyle="width: 32px; font-size: smaller">
@@ -247,7 +247,7 @@
                     </p:panel>
                     <p:panel id="vtalisPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
                         <f:facet name="header">
-                            <p:commandLink value="Listas de precios" actionListener="#{articulo.buscarListaPrecios(event)}" ajax="true" update="vtalisPanel"  title="Click para consultar listas de precios"/>
+                            <p:commandLink value="Listas de precios" actionListener="#{articulo.buscarListaPrecios(event)}" ajax="false" update="vtalisPanel"  title="Click para consultar listas de precios"/>
                         </f:facet>
                         <p:dataTable value="#{articulo.vlistasdets}" var="listasPrecios" rendered="#{!empty articulo.vlistasdets}">
                             <p:column>
