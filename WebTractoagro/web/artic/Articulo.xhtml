@@ -21,16 +21,16 @@
                     <h:panelGrid>
                         <h:panelGrid style="border-style: solid" >
                             <h:panelGrid columns="2">
-                                <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: smaller">
+                                <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: small">
                                 </h:inputText>
-                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: smaller" update="ArticulosPanel">
+                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: small" update="ArticulosPanel">
                                 </p:commandButton>
                             </h:panelGrid>
                             <p:outputPanel id="ArticulosPanel">
-                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: smaller" rendered="#{! empty articulo.artArticulos}">
+                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: small" rendered="#{! empty articulo.artArticulos}">
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText style="font-weight: bold;font-size: smaller" value="Cód."/>
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Cód."/>
                                         </f:facet>
                                         <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic(event)}" ajax="false" global="false"  update=":formArticulo,:formArticulo:detallesProv">
                                             <f:param name="codigoArtParam" value="#{articulos.artCod}"/>
@@ -38,13 +38,13 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText style="font-weight: bold;font-size: smaller" value="Descripción"/>
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Descripción"/>
                                         </f:facet>
                                         <h:outputText value="#{articulos.artDesc}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText style="font-weight: bold;font-size: smaller" value="Marca"/>
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Marca"/>
                                         </f:facet>
                                         <h:outputText value="#{articulos.artRub.marCod}"/>
                                     </p:column>
