@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,6 +73,13 @@ public class HolistartBean implements HolistartRemote, HolistartLocal {
         }
         return null;
     }
+    
+    private static Comparator<CpraFacturas> COMPARATORCPRAS = new Comparator<CpraFacturas>() {
+
+        public int compare(CpraFacturas o1, CpraFacturas o2) {
+            return o1.getFp_fecha().compareTo(o2.getFp_fecha());
+        }
+    };
 
     public List<CpraFacturas> listarCompCpraporArticulo(String codArticulo) {
         try {
@@ -85,7 +94,7 @@ public class HolistartBean implements HolistartRemote, HolistartLocal {
              */
             try {
                 strTipo = "SIS";
-                strSQL = "SELECT * FROM facpro LEFT JOIN factupro ON facpro.tcp_codigo=factupro.tcp_codigo AND facpro.fp_succod=factupro.fp_succod AND facpro.fp_codigo=factupro.fp_codigo WHERE (facpro.tcp_codigo=1 OR facpro.tcp_codigo=33 OR facpro.tcp_codigo=3) AND fp_impresa='I' AND ar_codigo='" + codArticulo + "' ORDER BY facpro.fp_fecha DESC";
+                strSQL = "SELECT * FROM facpro LEFT JOIN factupro ON facpro.tcp_codigo=factupro.tcp_codigo AND facpro.fp_succod=factupro.fp_succod AND facpro.fp_codigo=factupro.fp_codigo AND facpro.pr_codigo=factupro.pr_codigo WHERE (facpro.tcp_codigo=1 OR facpro.tcp_codigo=33 OR facpro.tcp_codigo=3) AND fp_impresa='I' AND ar_codigo='" + codArticulo + "' ORDER BY facpro.fp_fecha DESC";
                 strConn = "jdbc:odbc:Tractoagro";
                 cpraFacturas.addAll(listarCompCpra(strConn, strSQL, strTipo));
             } catch (Exception e) {
@@ -103,6 +112,10 @@ public class HolistartBean implements HolistartRemote, HolistartLocal {
             } catch (Exception e) {
                 e.getMessage();
             }
+            
+            Comparator<CpraFacturas> REVERSECOMPARATORCPRAS = Collections.reverseOrder(COMPARATORCPRAS);
+            
+            Collections.sort(cpraFacturas, REVERSECOMPARATORCPRAS);
 
             return cpraFacturas;
 
@@ -173,6 +186,13 @@ public class HolistartBean implements HolistartRemote, HolistartLocal {
         }
         return null;
     }
+    
+    private static Comparator<VtaFacturas> COMPARATORVTAS = new Comparator<VtaFacturas>() {
+
+        public int compare(VtaFacturas o1, VtaFacturas o2) {
+            return o1.getComp_Fecha().compareTo(o2.getComp_Fecha());
+        }
+    };
 
     public List<VtaFacturas> listarFacturasporArticulo(String codArticulo) {
         try {
@@ -208,6 +228,10 @@ public class HolistartBean implements HolistartRemote, HolistartLocal {
                 e.getStackTrace();
             }
 
+            Comparator<VtaFacturas> COMPARATORVTASREVERSE = Collections.reverseOrder(COMPARATORVTAS);
+            
+            Collections.sort(vtaFacturas, COMPARATORVTASREVERSE);
+            
             return vtaFacturas;
 
         } catch (Exception e) {
