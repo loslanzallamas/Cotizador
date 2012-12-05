@@ -153,14 +153,14 @@ public class articulo implements Serializable, ActionListener {
     public void setVtaFacturas(List<VtaFacturas> vtaFacturas) {
         this.vtaFacturas = vtaFacturas;
     }
-    protected CpraFacturas[] cprasArtic;
+    protected List<CpraFacturas> cprasArtic;
 
     /**
      * Get the value of cprasArtic
      *
      * @return the value of cprasArtic
      */
-    public CpraFacturas[] getCprasArtic() {
+    public List<CpraFacturas> getCprasArtic() {
         return cprasArtic;
     }
 
@@ -169,7 +169,7 @@ public class articulo implements Serializable, ActionListener {
      *
      * @param cprasArtic new value of cprasArtic
      */
-    public void setCprasArtic(CpraFacturas[] cprasArtic) {
+    public void setCprasArtic(List<CpraFacturas> cprasArtic) {
         this.cprasArtic = cprasArtic;
     }
     protected VlistasDet[] vlistasdets;
@@ -330,7 +330,7 @@ public class articulo implements Serializable, ActionListener {
     public void buscarVtasCompDet(ActionEvent event) {
         try {
             String artiCod = getArtArt().getArtCod();
-            List<VtaFacturas> vtaFacturases = Arrays.asList(holistartBean.articuloVentas(artiCod));
+            List<VtaFacturas> vtaFacturases = holistartBean.listarFacturasporArticulo(artiCod);
             setVtaFacturas(vtaFacturases);
         } catch (Exception e) {
             e.getMessage();
@@ -341,7 +341,8 @@ public class articulo implements Serializable, ActionListener {
     public void buscarCprasFact(ActionEvent event) {
         try {
             String artiCod = getArtArt().getArtCod();
-            CpraFacturas[] cpraFacturas = (CpraFacturas[]) holistartBean.listarCompCpraporArticulo(artiCod).toArray(new CpraFacturas[0]);
+            //CpraFacturas[] cpraFacturas = (CpraFacturas[]) holistartBean.listarCompCpraporArticulo(artiCod).toArray(new CpraFacturas[0]);
+            List<CpraFacturas> cpraFacturas = holistartBean.listarCompCpraporArticulo(artiCod);
             setCprasArtic(cpraFacturas);
         } catch (Exception e) {
             System.out.println(e.getMessage());

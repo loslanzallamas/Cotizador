@@ -27,7 +27,7 @@
                                 </p:commandButton>
                             </h:panelGrid>
                             <p:outputPanel id="ArticulosPanel">
-                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: small" rendered="#{! empty articulo.artArticulos}">
+                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: small" rendered="#{! empty articulo.artArticulos}" paginator="true" rows="10" paginatorAlwaysVisible="false">
                                     <p:column>
                                         <f:facet name="header">
                                             <h:outputText style="font-weight: bold;font-size: small" value="Cód."/>
@@ -149,7 +149,7 @@
                         <f:facet name="header">
                             <p:commandLink value="Ventas" actionListener="#{articulo.buscarVtasCompDet(event)}" ajax="true" update="vtasPanel" title="Click para consultar ventas"/>
                         </f:facet>
-                        <p:dataTable id="histVtas" value="#{articulo.vtaFacturas}" dynamic="true" var="historico" rendered="#{!empty articulo.vtaFacturas}">
+                        <p:dataTable id="histVtas" value="#{articulo.vtaFacturas}" dynamic="true" var="historico" rendered="#{!empty articulo.vtaFacturas}"  paginator="true" rows="10" paginatorAlwaysVisible="false">
                             <p:column filterBy="#{historico.comp_Tipo}" filterStyle="width: 32px; font-size: smaller" sortBy="#{historico.comp_Tipo}" parser="text">
                                 <f:facet name="header"><h:outputText value="Tipo" style="font-weight: bold; font-size: smaller"/></f:facet>
                                 <h:outputText value="#{historico.comp_Tipo}" style="float: left"/>
@@ -204,7 +204,7 @@
                         <f:facet name="header">
                             <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact(event)}" ajax="true" update="cprasPanel"  title="Click para consultar compras"/>
                         </f:facet>
-                        <p:dataTable id="histCompras" value="#{articulo.cprasArtic}" dynamic="true" var="compras" rendered="#{!empty articulo.cprasArtic}">
+                        <p:dataTable id="histCompras" value="#{articulo.cprasArtic}" dynamic="true" var="compras" rendered="#{!empty articulo.cprasArtic}" paginator="true" rows="10" paginatorAlwaysVisible="false">
                             <p:column sortBy="#{compras.comp_Tipo}" filterBy="#{compras.comp_Tipo}" filterStyle="width: 32px; font-size: smaller">
                                 <f:facet name="header"><h:outputText value="Tipo" style="font-weight: bold; font-size: smaller"/></f:facet>
                                 <h:outputText value="#{compras.comp_Tipo}" style="float: left"/>

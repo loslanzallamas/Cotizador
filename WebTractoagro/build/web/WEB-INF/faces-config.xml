@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+<managed-bean>
+    <managed-bean-name>
+        articulo
+    </managed-bean-name>
+    <managed-bean-class>
+        org.tractoagro.articulo
+    </managed-bean-class>
+    <managed-bean-scope>
+        session
+    </managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+    <managed-bean-name>
+        proveedores
+    </managed-bean-name>
+    <managed-bean-class>
+        org.tractoagro.proveedores
+    </managed-bean-class>
+    <managed-bean-scope>
+        session
+    </managed-bean-scope>
+</managed-bean>
+
+<managed-bean>
+    <managed-bean-name>
+        stock
+    </managed-bean-name>
+    <managed-bean-class>
+        org.tractoagro.stock
+    </managed-bean-class>
+    <managed-bean-scope>
+        session
+    </managed-bean-scope>
+</managed-bean>
+    <navigation-rule>
+        <from-view-id>
+            /artic/*
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>clientes</from-outcome>
+            <to-view-id>artic/Clientes.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>
+            /artic/*
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>articulos</from-outcome>
+            <to-view-id>artic/Articulo.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

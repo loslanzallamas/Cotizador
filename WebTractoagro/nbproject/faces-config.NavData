@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="artic/prueba.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="artic/*" x="150" y="150" zoom="true"/>
+        <Node id="artic/Clientes.xhtml" x="511" y="243" zoom="false"/>
+        <Node id="artic/Articulo.xhtml" x="133" y="63" zoom="true"/>
+        <Node id="resources/plantilla.xhtml" x="150" y="300" zoom="false"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

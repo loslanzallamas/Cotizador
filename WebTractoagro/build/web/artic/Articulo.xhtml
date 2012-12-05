@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./../resources/plantilla.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h:form id="formArticulo" prependId="false">
+            <p:ajaxStatus>
+                <f:facet name="start">
+                    <h:outputText value="Consultando al servidor "/>
+                    <h:graphicImage value="/resources/images/ajax-loader.gif"/>
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+            <h:panelGrid>
+                <h:panelGrid>
+                    <h:panelGrid>
+                        <h:panelGrid style="border-style: solid" >
+                            <h:panelGrid columns="2">
+                                <h:inputText id="detCodArt" accesskey="c" tabindex="0" value="#{articulo.artCod}" style="font-size: small">
+                                </h:inputText>
+                                <p:commandButton value="Buscar" action="#{articulo.traerArticulos()}" style="font-size: small" update="ArticulosPanel">
+                                </p:commandButton>
+                            </h:panelGrid>
+                            <p:outputPanel id="ArticulosPanel">
+                                <p:dataTable id="artArticulos" value="#{articulo.artArticulos}" var="articulos" scrollable="true" style="font-size: small" rendered="#{! empty articulo.artArticulos}" paginator="true" rows="10" paginatorAlwaysVisible="false">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Cód."/>
+                                        </f:facet>
+                                        <p:commandLink value="#{articulos.artCod}" actionListener="#{articulo.provCostosxArtic(event)}" ajax="true" global="false"  update=":formArticulo,:formArticulo:detallesProv">
+                                            <f:param name="codigoArtParam" value="#{articulos.artCod}"/>
+                                        </p:commandLink>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Descripción"/>
+                                        </f:facet>
+                                        <h:outputText value="#{articulos.artDesc}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText style="font-weight: bold;font-size: small" value="Marca"/>
+                                        </f:facet>
+                                        <h:outputText value="#{articulos.artRub.marCod}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </h:panelGrid>
+                        <h:panelGrid id="ArticuloPanel" columns="2">
+                            <h:outputText value="Código: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
+                            <h:outputText id="detCodigoArt" value="#{articulo.artArt.artCod}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
+                            <h:outputText value="Descripción: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
+                            <h:outputText id="detDescArt" value="#{articulo.artArt.artDesc}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
+                            <h:outputText value="Rubro: " rendered="#{!empty articulo.artArt}" style="font-size: smaller"/>
+                            <h:outputText id="detRubArt" value="#{articulo.artArt.artRub.marCod}" rendered="#{!empty articulo.artArt}" style="font-size: medium"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+                <p:outputPanel id="articDetalles" rendered="#{!empty articulo.artArt}">
+                    <p:panel id="detallesProv" header="Proveedores" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                        <p:growl showDetail="true"/>
+                        <h:outputText value="No se encontraron proveedores" rendered="#{empty articulo.provCostos}"/>
+                        <p:dataTable id="provCostos" value="#{articulo.provCostos}" var="provCosto" >
+                            <p:column width="16">
+                                <p:rowToggler/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold;; font-size: smaller" value="Proveedor"/>
+                                </f:facet>
+                                <p:commandLink value="#{provCosto.proveeid.provNom}" ajax="true" global="false" actionListener="#{proveedores.consultarProveedor}" oncomplete="dlgProv.show()" update=":formArticulo:provDatos">
+                                    <f:param name="parProvCod" value="#{provCosto.proveeid.provCod}"/>
+                                </p:commandLink>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold;; font-size: smaller" value="Precio"/>
+                                </f:facet>
+                                <h:outputText value="#{provCosto.arPreProv}">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Desc %"/>
+                                </f:facet>
+                                <h:outputText value="#{provCosto.arPreDesc}" style="float: right">
+                                    <f:convertNumber type="number" pattern="###0.00"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Costo Final"/>
+                                </f:facet>
+                                <h:outputText id="labelCosto" style="font-weight: bold; text-align: right" value="#{provCosto.arcosto}">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Fecha"/>
+                                </f:facet>
+                                <h:outputText value="#{provCosto.arPreFecha}">
+                                    <f:convertDateTime dateStyle="short"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Coef."/>
+                                </f:facet>
+                                <h:outputText value="1,96" style="float: right">
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText style="font-weight: bold; font-size: smaller" value="Precio Lista"/>
+                                </f:facet>
+                                <h:outputText value="#{provCosto.arcosto*(provCosto.arProCo/100+1)*1.96}" style="font-weight: bold; background-color: #66ffff">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:rowExpansion>
+                                <h:panelGrid title="Detalles precios de lista" columns="1">
+                                    <h:panelGrid columns="2" style="border-style: solid">
+                                        <h:outputText value="Competencia: "/>
+                                        <h:outputText value="#{provCosto.preVta.compProvLis.proveeid.provNom}"/>
+                                        <h:outputText value="Regla aplicada: "/>
+                                        <h:outputText value="#{provCosto.preVta.reglaDesc}"/>
+                                    </h:panelGrid>
+                                    <h:panelGrid title="Detalles proveedor" columns="2" style="border-style: solid">
+                                        <h:outputText value="Cod. Art. Prov: "/>
+                                        <h:outputText value="#{provCosto.arCodProv}"/>
+                                        <h:outputText value="Descrip. Art. Prov: "/>
+                                        <h:outputText value="#{provCosto.arDescProv}"/>
+                                        <h:outputText value="Observ. Prov: "/>
+                                        <h:outputText value="#{provCosto.arProvObs}"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                            </p:rowExpansion>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel id="vtasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller" >
+                        <f:facet name="header">
+                            <p:commandLink value="Ventas" actionListener="#{articulo.buscarVtasCompDet(event)}" ajax="true" update="vtasPanel" title="Click para consultar ventas"/>
+                        </f:facet>
+                        <p:dataTable id="histVtas" value="#{articulo.vtaFacturas}" dynamic="true" var="historico" rendered="#{!empty articulo.vtaFacturas}"  paginator="true" rows="10" paginatorAlwaysVisible="false">
+                            <p:column filterBy="#{historico.comp_Tipo}" filterStyle="width: 32px; font-size: smaller" sortBy="#{historico.comp_Tipo}" parser="text">
+                                <f:facet name="header"><h:outputText value="Tipo" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Tipo}" style="float: left"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Cl. Cód."  style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Clcod}"/>
+                            </p:column>
+                            <p:column sortBy="#{historico.comp_Clnom}" filterBy="#{historico.comp_Clnom}" filterStyle="font-size: smaller">
+                                <f:facet name="header"><h:outputText value="Cliente" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Clnom}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="T.C." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_tipo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Comp." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Nro}"/>
+                            </p:column>
+                            <p:column sortBy="#{historico.comp_Fecha}">
+                                <f:facet name="header"><h:outputText value="Fecha"  style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Fecha}" style="float: right">
+                                    <f:convertDateTime dateStyle="short"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Cant." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.vtaFacturasDet.ifaCantid}" style="float: right">
+                                    <f:convertNumber pattern="###0"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Pre. Un." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.vtaFacturasDet.ifaUnipre}" style="float: right">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Precio c/dcto" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.vtaFacturasDet.ifaUnipre*(1-(historico.comp_PorDcto/100))}" style="float: right">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column sortBy="#{historico.comp_Operador}" filterBy="#{historico.comp_Operador}" filterStyle="width: 32px; font-size: smaller">
+                                <f:facet name="header"><h:outputText value="Oper." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{historico.comp_Operador}" style="float: right"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                    <p:panel id="cprasPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                        <f:facet name="header">
+                            <p:commandLink value="Compras" actionListener="#{articulo.buscarCprasFact(event)}" ajax="true" update="cprasPanel"  title="Click para consultar compras"/>
+                        </f:facet>
+                        <p:dataTable id="histCompras" value="#{articulo.cprasArtic}" dynamic="true" var="compras" rendered="#{!empty articulo.cprasArtic}" paginator="true" rows="10" paginatorAlwaysVisible="false">
+                            <p:column sortBy="#{compras.comp_Tipo}" filterBy="#{compras.comp_Tipo}" filterStyle="width: 32px; font-size: smaller">
+                                <f:facet name="header"><h:outputText value="Tipo" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.comp_Tipo}" style="float: left"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Cod. Prov" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.pr_codigo}" style="float: left"/>
+                            </p:column>
+                            <p:column sortBy="#{compras.fp_nombre}" filterBy="#{compras.fp_nombre}" filterStyle="font-size: smaller">
+                                <f:facet name="header"><h:outputText value="Nombre" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.fp_nombre}" style="float: left"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="T.C." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.tcp_codigo}" style="float: left"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Código" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.fp_codigo}" style="float: left"/>
+                            </p:column>
+                            <p:column sortBy="#{compras.fp_fecha}">
+                                <f:facet name="header"><h:outputText value="Fecha" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.fp_fecha}" style="float: left">
+                                    <f:convertDateTime dateStyle="short"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Cant." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.cpraFacturasDet.ifps_canti}" style="float: left">
+                                    <f:convertNumber pattern="###0"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Pre. Un." style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{compras.cpraFacturasDet.ifps_unine}" style="float: left">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                    <p:panel id="vtalisPanel" toggleable="true" toggleSpeed="100" style="font-size: smaller">
+                        <f:facet name="header">
+                            <p:commandLink value="Listas de precios" actionListener="#{articulo.buscarListaPrecios(event)}" ajax="true" update="vtalisPanel"  title="Click para consultar listas de precios"/>
+                        </f:facet>
+                        <p:dataTable value="#{articulo.vlistasdets}" var="listasPrecios" rendered="#{!empty articulo.vlistasdets}">
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Decripción" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{listasPrecios.lisDetDesc}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Precio" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{listasPrecios.lisDetPrec}" style="font-weight: bold; float: right;background-color: #66ffff">
+                                    <f:convertNumber type="currency"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header"><h:outputText value="Observación" style="font-weight: bold; font-size: smaller"/></f:facet>
+                                <h:outputText value="#{listasPrecios.lisId.lisNom}">
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </p:outputPanel>
+            </h:panelGrid>
+            <p:dialog id="provDatos" header="Proveedor" widgetVar="dlgProv">
+                <p:outputPanel id="poutProvDet">
+                    <h:outputText value="Proveedor"/>
+                    <h:panelGrid id="display" columns="2">
+                        <h:outputText value="Código: " style="font-size: smaller"/>
+                        <h:outputText value="#{proveedores.provProveedor.provCod}" style="font-size: smaller"/>
+                        <h:outputText value="Nombre: " style="font-size: smaller"/>
+                        <h:outputText value="#{proveedores.provProveedor.provNombre}" style="font-size: smaller"/>
+                        <h:outputText value="Teléfono: " style="font-size: smaller"/>
+                        <h:outputText value="#{proveedores.provProveedor.provTel}" style="font-size: smaller"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+        <h:outputText value="2012" style="float: right;font-size: smaller"/>
+    </ui:define>
+
+</ui:composition>
